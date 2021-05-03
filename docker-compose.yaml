@@ -1,0 +1,17 @@
+version: "2"
+
+services:
+    mysql:
+        image: mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: vignestore
+        ports:
+        - 3306:3306
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        environment:
+            PMA_HOSTS: mysql
+        ports:
+            - 8080:80
