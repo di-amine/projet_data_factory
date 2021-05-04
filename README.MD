@@ -25,6 +25,12 @@ Options:
 
 ### Générer des logs d'accès HTTP
 
+Variables d'environnements:
+
+```
+BUSINESS_LOGGER_URL : URL complète du server qui reçoit les logs
+```
+
 ```
 Usage:
   app:gen-access-log [options]
