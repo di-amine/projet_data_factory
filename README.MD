@@ -1,3 +1,23 @@
+## docker
+
+Pour lancer le docker-compose:
+
+```
+docker-compose up -d
+```
+
+Pour voir les containers:
+
+```
+docker ps
+```
+
+Pour entrer dans le container application:
+
+```
+docker exec -ti vignestore_app_1 sh
+```
+
 ## symfony
 
 Pour voir la liste des commandes Symfony: ``php bin/console``

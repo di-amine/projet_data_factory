@@ -2,19 +2,16 @@ version: "2"
 
 services:
     app:
-        build: .
+        image: ebuildy/vignestore:latest
+        #build: .
         environment:
             DATABASE_URL: "mysql://root:root@mysql:3306/vignestore?serverVersion=5.7"
-        ports:
-            - 80:8080
 
     mysql:
         image: mysql:5.7
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: vignestore
-        ports:
-        - 3306:3306
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
