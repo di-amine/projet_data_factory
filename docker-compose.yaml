@@ -3,7 +3,8 @@ version: "2"
 services:
     app:
         image: ebuildy/vignestore:latest
-        #build: .
+        #volumes:
+        #    - .:/var/www/html
         environment:
             DATABASE_URL: "mysql://root:root@mysql:3306/vignestore?serverVersion=5.7"
 

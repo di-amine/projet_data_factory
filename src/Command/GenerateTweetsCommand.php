@@ -135,7 +135,7 @@ class GenerateTweetsCommand extends Command
 
             for ($j = 0; $j < rand(0, 10); $j++)
             {
-                $text = $this->reviews[array_rand($this->reviews)];
+                $text = $this->reviews[array_rand($this->reviews)]['review'];
 
                 yield $this->tweet([
                     'text'      => $text,
