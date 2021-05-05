@@ -26,6 +26,12 @@ Pour voir la liste des commandes Symfony: ``php bin/console``
 
 ### Lancer des logs en boucle
 
+Variables d'environnements:
+
+```
+BUSINESS_LOGGER_URL : URL complète du server qui reçoit les logs
+```
+
 ```
 Usage:
   app:submit-events [options]
@@ -44,12 +50,6 @@ Options:
 ```
 
 ### Générer des logs d'accès HTTP
-
-Variables d'environnements:
-
-```
-BUSINESS_LOGGER_URL : URL complète du server qui reçoit les logs
-```
 
 ```
 Usage:
