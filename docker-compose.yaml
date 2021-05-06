@@ -3,10 +3,12 @@ version: "2"
 services:
     app:
         image: ebuildy/vignestore:latest
-        #volumes:
-        #    - .:/var/www/html
+        volumes:
+            - .:/var/www/html
+            - ./var/log:/my_data
         environment:
             DATABASE_URL: "mysql://root:root@mysql:3306/vignestore?serverVersion=5.7"
+            BUSINESS_LOGGER_URL: http://logstash_http:8081/
 
     mysql:
         image: mysql:5.7
@@ -20,3 +22,45 @@ services:
             PMA_HOSTS: mysql
         ports:
             - 8080:80
+
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
+        environment:
+            - discovery.type=single-node
+            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+            - xpack.security.enabled=false
+            - xpack.ml.enabled=false
+            - xpack.monitoring.enabled=false
+            - xpack.graph.enabled=false
+            - xpack.watcher.enabled=false
+            - MONITORING_ENABLED=false
+        ports:
+            - 9200:9200
+
+    kibana:
+        image: docker.elastic.co/kibana/kibana:7.12.0
+        environment:
+            - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+        ports:
+            - 5601:5601
+
+    logstash_access_log:
+        build: ./analytics/logstash
+        command: "--config.reload.automatic"
+        environment:
+            - MONITORING_ENABLED=false
+            - LOG_LEVEL=info
+            - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+        volumes:
+            - ./analytics/pipeline_access_log.conf:/usr/share/logstash/pipeline/logstash.conf
+            - ./var/log:/my_data
+
+    logstash_http:
+        image: docker.elastic.co/logstash/logstash:7.12.0
+        command: "--config.reload.automatic"
+        environment:
+            - MONITORING_ENABLED=false
+            - LOG_LEVEL=info
+            - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+        volumes:
+            - ./analytics/pipeline_http.conf:/usr/share/logstash/pipeline/logstash.conf
