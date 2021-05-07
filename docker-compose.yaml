@@ -4,7 +4,6 @@ services:
     app:
         image: ebuildy/vignestore:latest
         volumes:
-            - .:/var/www/html
             - ./var/log:/my_data
         environment:
             DATABASE_URL: "mysql://root:root@mysql:3306/vignestore?serverVersion=5.7"
@@ -56,7 +55,7 @@ services:
             - ./var/log:/my_data
 
     logstash_http:
-        image: docker.elastic.co/logstash/logstash:7.12.0
+        build: ./analytics/logstash
         command: "--config.reload.automatic"
         environment:
             - MONITORING_ENABLED=false
